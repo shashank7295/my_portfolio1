@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Portfolio of Shashank Mishra, Web developer & UI Designer">
+  <title>Shashank | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="sk.jpg">
+</head>
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+  
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Navigation -->
+  <nav class="glass-nav" aria-label="Main navigation">
+    <div class="nav-container">
+      <div class="logo-wrapper">
+        <a href="#" class="logo" aria-label="Shashank Mishra Logo">
+          <img src="sk.jpg" alt="Shashank Mishra" class="logo-img">
+        </a>
+        <span class="logo-title">Shashank Mishra</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="#home" class="nav-link active" aria-current="page">Home</a></li>
+        <li><a href="#work" class="nav-link">Work</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#instagram-dm" class="nav-link"><i class="fab fa-instagram"></i> Message</a></li>
+        <li class="close-menu" aria-label="Close menu"><i class="fas fa-times"></i></li>
+      </ul>
+      <!-- Message Icon -->
+      <button id="message-btn" class="message-btn" aria-label="Open messages">
+        <i class="fas fa-envelope"></i>
+        <span id="message-badge" class="message-badge">0</span>
+      </button>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- message Drawer -->
+  <div id="message-drawer" class="message-drawer">
+    <div class="message-header">
+      <h3>Send Message to Instagram</h3>
+      <button id="close-messages" class="close-messages" aria-label="Close messages">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="message-list" id="message-list">
+      <!-- Messages will be dynamically added here -->
+    </div>
+    <div class="message-input">
+      <input type="text" id="new-message" placeholder="Type a message for Shashank...">
+      <button id="send-message">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Message Overlay -->
+  <div id="message-overlay" class="message-overlay"></div>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="title-line">Hello, I'm</span>
+        <span class="title-name">Shashank Mishra</span>
+        <span class="title-sub"><span id="typed"></span></span>
+      </h1>
+      <div class="hero-btns">
+        <a href="#work" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Hire Me</a>
+      </div>
+      <div class="scroll-down">
+        <a href="#work" class="scroll-down-link">
+          <span>Scroll Down</span>
+          <i class="fas fa-chevron-down"></i>
+        </a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="image-wrapper">
+        <img 
+          src="sk.jpg" 
+          srcset="sk.jpg,skmax-width 600px480px.png, skmax-width 1200px800px.png"
+          sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 1200px"
+          alt="Shashank Mishra" 
+          class="profile-img" 
+          loading="lazy">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Section -->
+  <section id="work" class="work">
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">Some of my best work</p>
+    </div>
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="Ecommerce Sales Dashboard.png" alt="E-commerce Dashboard" loading="lazy">
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>E-commerce Dashboard</h3>
+          <p>A modern admin dashboard for online stores with analytics and inventory management.</p>
+          <div class="project-tags">
+            <span>React</span>
+            <span>Node.js</span>
+            <span>MongoDB</span>
+          </div>
+        </div>
+      </div>
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="058f1975-a4dd-495d-a18c-150934bb231f-The_Points_Guy_App_handout.webp" alt="Travel App" loading="lazy">
+          <div class="project-links">
+            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>Travel Explorer App</h3>
+          <p>Interactive travel planning application with itinerary builder and local recommendations.</p>
+          <div class="project-tags">
+            <span>Vue.js</span>
+            <span>Firebase</span>
+            <span>Mapbox</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="btn btn-outline">View All Projects</a>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills">
+    <div class="section-header">
+      <h2 class="section-title">My Skills</h2>
+      <p class="section-subtitle">Technologies I work with</p>
+    </div>
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3>Frontend</h3>
+        <div class="skill-items">
+          <div class="skill-item">
+            <div class="skill-icon">
+              <i class="fab fa-html5"></i>
+            </div>
+            <div class="skill-info">
+              <span>HTML5</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="95%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">
+              <i class="fab fa-css3-alt"></i>
+            </div>
+            <div class="skill-info">
+              <span>CSS3</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="90%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">
+              <i class="fab fa-js"></i>
+            </div>
+            <div class="skill-info">
+              <span>JavaScript</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Backend</h3>
+        <div class="skill-items">
+          <div class="skill-item">
+            <div class="skill-icon">
+              <i class="fab fa-node"></i>
+            </div>
+            <div class="skill-info">
+              <span>Node.js</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Design</h3>
+        <div class="skill-items">
+          <div class="skill-item">
+            <div class="skill-icon">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="skill-info">
+              <span>Figma</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="about-container">
+      <div class="about-image">
+        <img src="sk.jpg" alt="About Shashank" loading="lazy">
+      </div>
+      <div class="about-content">
+        <h2 class="section-title">About Me</h2>
+        <p class="about-text">
+          I'm a passionate Web developer with 2 years of experience creating beautiful, 
+          functional digital experiences. I specialize in React and Vue.js applications with 
+          a focus on performance and accessibility.
+        </p>
+        <p class="about-text">
+          When I'm not coding, you can find me hiking in the mountains or experimenting with 
+          new photography techniques. I believe great design and technology should work 
+          together seamlessly.
+        </p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">25+</span>
+            <span class="stat-label">Clients</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Years Exp</span>
+          </div>
+        </div>
+        <a href="resume.pdf" class="btn btn-primary" download>
+          <i class="fas fa-download"></i> Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="section-header">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Let's work together</p>
+    </div>
+    <div class="contact-container">
+      <form class="contact-form" action="https://formspree.io/f/mzzrbkoz" method="POST">
+        <input type="hidden" name="_subject" value="New Contact Submission">
+        <div class="form-group">
+          <label for="name" class="sr-only">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <label for="email" class="sr-only">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <label for="message" class="sr-only">Your Message</label>
+          <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+        <div id="form-message" class="form-message" style="display:none; color: green; margin-top: 1rem;">
+          Thank you! Your message has been sent.
+        </div>
+      </form>
+  
+      <div class="contact-info">
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:shashank.masoom95111@gmail.com">shashank.masoom95111@gmail.com</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-phone-alt"></i>
+          <div>
+            <h4>Phone</h4>
+            <a href="tel:+919511137588">+91 9511137588</a>
+          </div>
+        </div>
+  
+        <div class="social-links">
+          <a href="https://github.com/shashank7295/" class="social-link"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/shashank-mishra-54427b323" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/shashank_mishra.3" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Instagram Direct Message Section -->
+  <section id="instagram-dm" class="instagram-dm">
+    <div class="section-header">
+      <h2 class="section-title">Message on Instagram</h2>
+      <p class="section-subtitle">Connect with me directly</p>
+    </div>
+    <div class="instagram-container">
+      <div class="instagram-profile">
+        <img src="sk.jpg" alt="Shashank Mishra Instagram" class="instagram-avatar">
+        <div class="instagram-info">
+          <h3>@shashank_mishra.3</h3>
+          <span class="instagram-status">Active Now</span>
+        </div>
+      </div>
+      
+      <div class="instagram-message-wrapper">
+        <form id="instagram-message-form" class="instagram-message-form">
+          <div class="form-group">
+            <label for="instagram-name" class="sr-only">Your Name</label>
+            <input type="text" id="instagram-name" name="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="instagram-message" class="sr-only">Your Message</label>
+            <textarea id="instagram-message" name="message" placeholder="Type your Instagram message here..." rows="3" required></textarea>
+          </div>
+          <div class="instagram-buttons">
+            <button type="submit" class="btn instagram-btn">
+              <i class="fas fa-paper-plane"></i> Send to Instagram
+            </button>
+            <a href="https://www.instagram.com/direct/t/shashank_mishra.3" target="_blank" class="btn instagram-direct-btn">
+              <i class="fab fa-instagram"></i> Open Instagram Direct
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">SM</div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#work">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#instagram-dm"><i class="fab fa-instagram"></i> Message</a>
+      </div>
+      <div class="footer-copy">
+        © 2025 Shashank Mishra. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#home" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+  
+  <!-- Notification Template (for reference, will be dynamically created) -->
+  <div class="notification" style="display: none;">
+    <img src="" alt="" class="notification-avatar">
+    <div class="notification-content">
+      <div class="notification-title"></div>
+      <div class="notification-text"></div>
+    </div>
+  </div>
+</body>
+</html>
+
+
