@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Reinitialize particles for theme change
-    setTimeout(initParticles, 300);
+    setTimeout(() => {
+      particlesJS.load('particles-js', getParticlesConfig(), null);
+    }, 300);
   });
   
   // Check for saved theme preference
@@ -60,245 +62,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Smooth scrolling for navigation links
+  // Smooth scrolling for navigation links with offset for fixed nav
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       
       const targetId = this.getAttribute('href');
       const targetElement = document.querySelector(targetId);
+      const navHeight = document.querySelector('.glass-nav').offsetHeight;
       
       if (targetElement) {
         window.scrollTo({
-          top: targetElement.offsetTop - 80,
+          top: targetElement.offsetTop - navHeight - 20, // Extra 20px buffer
           behavior: 'smooth'
         });
       }
     });
   });
-  
-  // Messaging System
-  const messageBtn = document.getElementById('message-btn');
-  const messageDrawer = document.getElementById('message-drawer');
-  const messageOverlay = document.getElementById('message-overlay');
-  const closeMessages = document.getElementById('close-messages');
-  const messageList = document.getElementById('message-list');
-  const newMessageInput = document.getElementById('new-message');
-  const sendMessageBtn = document.getElementById('send-message');
-  const messageBadge = document.getElementById('message-badge');
-  
-  // Sample users who might send messages (in a real app, this would come from a database)
-  const users = [
-    { id: 1, name: 'Sarah Johnson', avatar: 'https://randomuser.me/api/portraits/women/32.jpg', isOnline: true },
-    { id: 2, name: 'David Lee', avatar: 'https://randomuser.me/api/portraits/men/44.jpg', isOnline: true },
-    { id: 3, name: 'Emma Williams', avatar: 'https://randomuser.me/api/portraits/women/65.jpg', isOnline: false },
-    { id: 4, name: 'Michael Brown', avatar: 'https://randomuser.me/api/portraits/men/22.jpg', isOnline: true }
-  ];
-  
-  // Function to toggle message drawer
-  function toggleMessageDrawer() {
-    messageDrawer.classList.toggle('active');
-    messageOverlay.classList.toggle('active');
-    
-    if (messageDrawer.classList.contains('active')) {
-      // Reset badge count when opening drawer
-      messageBadge.textContent = '0';
-    }
-  }
-  
-  // Event listeners for opening/closing message drawer
-  messageBtn.addEventListener('click', toggleMessageDrawer);
-  closeMessages.addEventListener('click', toggleMessageDrawer);
-  messageOverlay.addEventListener('click', toggleMessageDrawer);
-  
-  // Function to add a new message to the chat
-  function addMessage(content, isSent = true, user = null) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message');
-    messageDiv.classList.add(isSent ? 'sent' : 'received');
-    
-    // Message content
-    messageDiv.innerHTML = `
-      ${content}
-      <div class="message-meta">
-        ${isSent 
-          ? '<span>You • Just now</span> <i class="fas fa-check"></i>' 
-          : `<span>${user.name} • Just now</span>`
-        }
-      </div>
-    `;
-    
-    // Add message to the list
-    messageList.appendChild(messageDiv);
-    
-    // Scroll to the bottom
-    messageList.scrollTop = messageList.scrollHeight;
-    
-    // If it's a received message and drawer is not open, increment badge count
-    if (!isSent && !messageDrawer.classList.contains('active')) {
-      const currentCount = parseInt(messageBadge.textContent);
-      messageBadge.textContent = currentCount + 1;
-    }
-  }
-  
-  // Function to create a notification
-  function showNotification(user, message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.classList.add('notification');
-    
-    notification.innerHTML = `
-      <img src="${user.avatar}" alt="${user.name}" class="notification-avatar">
-      <div class="notification-content">
-        <div class="notification-title">${user.name}</div>
-        <div class="notification-text">${message}</div>
-      </div>
-    `;
-    
-    // Add to body
-    document.body.appendChild(notification);
-    
-    // Show notification
-    setTimeout(() => {
-      notification.classList.add('active');
-    }, 100);
-    
-    // Remove notification after 5 seconds
-    setTimeout(() => {
-      notification.classList.remove('active');
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 5000);
-    
-    // Click notification to open messages
-    notification.addEventListener('click', () => {
-      if (!messageDrawer.classList.contains('active')) {
-        toggleMessageDrawer();
-      }
-      notification.remove();
-    });
-  }
-  
-  // Event listener for sending a message
-  sendMessageBtn.addEventListener('click', sendMessage);
-  newMessageInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  });
-  
-  function sendMessage() {
-    const message = newMessageInput.value.trim();
-    if (message) {
-      // Add the sent message
-      addMessage(message, true);
-      
-      // Clear input
-      newMessageInput.value = '';
-      
-      // Display confirmation to the user
-      const notification = document.createElement('div');
-      notification.classList.add('notification');
-      
-      notification.innerHTML = `
-        <img src="sk.jpg" alt="Shashank Mishra" class="notification-avatar">
-        <div class="notification-content">
-          <div class="notification-title">Message Sent</div>
-          <div class="notification-text">Your message has been sent to Shashank's Instagram</div>
-        </div>
-      `;
-      
-      // Add to body
-      document.body.appendChild(notification);
-      
-      // Show notification
-      setTimeout(() => {
-        notification.classList.add('active');
-      }, 100);
-      
-      // Remove notification after 5 seconds
-      setTimeout(() => {
-        notification.classList.remove('active');
-        setTimeout(() => {
-          notification.remove();
-        }, 300);
-      }, 5000);
-      
-      // Redirect to Instagram on click (for mobile convenience)
-      notification.addEventListener('click', () => {
-        window.open('https://www.instagram.com/direct/inbox/', '_blank');
-        notification.remove();
-      });
-      
-      // In a real implementation, you would send this to your backend
-      // Here we'll do a simulated Instagram connection
-      try {
-        // This would be a real API endpoint in production
-        const instagramUsername = 'shashank_mishra.3';
-        
-        // For demonstration purposes only - this shows how it would work 
-        // with a real backend implementation
-        console.log(`Message "${message}" sent to Instagram user ${instagramUsername}`);
-        
-        // Instead of the direct Instagram API (which requires authentication),
-        // you would use your own backend service that handles the Instagram API
-        
-        // For example, using fetch in a real implementation:
-        /*
-        fetch('https://your-backend-service.com/send-instagram-message', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: message,
-            instagramUsername: instagramUsername
-          }),
-        });
-        */
-      } catch (error) {
-        console.error('Error sending message to Instagram:', error);
-      }
-    }
-  }
-  
-  // Simulate Instagram connection check
-  function simulateIncomingMessages() {
-    // Show an Instagram connection status message
-    if (!messageDrawer.classList.contains('active')) {
-      const statusMessage = "Your messages will be sent directly to my Instagram inbox. I'll respond as soon as possible!";
-      
-      // Add info message to chat if empty
-      if (messageList.children.length === 0) {
-        const infoDiv = document.createElement('div');
-        infoDiv.classList.add('message', 'info');
-        infoDiv.innerHTML = `
-          <div class="instagram-info">
-            <i class="fab fa-instagram"></i>
-            <span>Connected to Instagram: @shashank_mishra.3</span>
-          </div>
-          <div class="info-text">${statusMessage}</div>
-        `;
-        messageList.appendChild(infoDiv);
-      }
-      
-      // Create notification about Instagram connectivity
-      const user = {
-        name: 'Instagram Connection',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png'
-      };
-      
-      // Only show this notification once
-      if (!localStorage.getItem('instagram-notification-shown')) {
-        showNotification(user, "Messages from this website will be sent to Shashank's Instagram inbox");
-        localStorage.setItem('instagram-notification-shown', 'true');
-      }
-    }
-  }
-  
-  // Start the Instagram connection simulation immediately
-  simulateIncomingMessages();
   
   // Active link highlighting
   const sections = document.querySelectorAll('section');
@@ -310,8 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.clientHeight;
+      const navHeight = document.querySelector('.glass-nav').offsetHeight;
       
-      if (pageYOffset >= sectionTop - 200) {
+      if (pageYOffset >= sectionTop - navHeight - 50) {
         current = section.getAttribute('id');
       }
     });
@@ -332,40 +113,178 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Initialize particles.js
-  function initParticles() {
+  // Particles.js Configuration
+  function getParticlesConfig() {
     const theme = document.documentElement.getAttribute('data-theme');
-    const particleColor = theme === 'dark' ? '#f72585' : '#4361ee';
+    const particleColors = theme === 'dark' 
+      ? ['#f72585', '#4cc9f0', '#00ffcc']  // Neon pink, cyan, teal for dark theme
+      : ['#4361ee', '#4cc9f0', '#00ccff']; // Blue, cyan, light teal for light theme
     
-    if (typeof particlesJS !== 'undefined') {
-      particlesJS('particles-js', {
-        particles: {
-          number: { value: 100, density: { enable: true, value_area: 800 } },
-          color: { value: particleColor },
-          shape: { type: 'circle' },
-          opacity: { value: 0.5, random: true },
-          size: { value: 3, random: true },
-          line_linked: { enable: true, distance: 150, color: particleColor, opacity: 0.4, width: 1 },
-          move: { enable: true, speed: 3, direction: 'none', random: true, straight: false, out_mode: 'out' },
+    return {
+      particles: {
+        number: {
+          value: 60,
+          density: {
+            enable: true,
+            value_area: 800
+          }
         },
-        interactivity: {
-          detect_on: 'canvas',
-          events: {
-            onhover: { enable: true, mode: 'grab' },
-            onclick: { enable: true, mode: 'push' },
-            resize: true,
-          },
-          modes: {
-            grab: { distance: 200, line_linked: { opacity: 1 } },
-            push: { particles_nb: 4 },
-          },
+        color: {
+          value: particleColors
         },
-        retina_detect: true,
-      });
+        shape: {
+          type: "triangle",
+          stroke: {
+            width: 0,
+            color: "#000000"
+          }
+        },
+        opacity: {
+          value: 0.7,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 1,
+            opacity_min: 0.3,
+            sync: false
+          }
+        },
+        size: {
+          value: 4,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 2,
+            size_min: 1,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: particleColors[0],
+          opacity: 0.5,
+          width: 1.5
+        },
+        move: {
+          enable: true,
+          speed: 3,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+          attract: {
+            enable: false,
+            rotateX: 600,
+            rotateY: 1200
+          }
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: {
+            enable: true,
+            mode: "repulse"
+          },
+          onclick: {
+            enable: true,
+            mode: "bubble"
+          },
+          resize: true
+        },
+        modes: {
+          repulse: {
+            distance: 100,
+            duration: 0.4
+          },
+          bubble: {
+            distance: 200,
+            size: 6,
+            duration: 2,
+            opacity: 0.8
+          }
+        }
+      },
+      retina_detect: true
+    };
+  }
+  
+  // Initialize Particles.js
+  if (typeof particlesJS !== 'undefined') {
+    particlesJS.load('particles-js', getParticlesConfig(), null);
+  }
+  
+  // Cursor Trail Effect
+  const canvas = document.getElementById('cursor-trail');
+  const ctx = canvas.getContext('2d');
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+  
+  const trailParticles = [];
+  const maxParticles = 50;
+  
+  class TrailParticle {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 5 + 2;
+      this.life = 1;
+      this.color = document.documentElement.getAttribute('data-theme') === 'dark'
+        ? `rgba(247, 37, 133, ${this.life})`  // Neon pink
+        : `rgba(67, 97, 238, ${this.life})`;   // Neon blue
+    }
+    
+    update() {
+      this.life -= 0.02;
+      this.size *= 0.98;
+    }
+    
+    draw() {
+      this.color = document.documentElement.getAttribute('data-theme') === 'dark'
+        ? `rgba(247, 37, 133, ${this.life})`
+        : `rgba(67, 97, 238, ${this.life})`;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
   
-  initParticles();
+  document.addEventListener('mousemove', (e) => {
+    const particle = new TrailParticle(e.clientX, e.clientY);
+    trailParticles.push(particle);
+    
+    if (trailParticles.length > maxParticles) {
+      trailParticles.shift();
+    }
+  });
+  
+  function animateTrail() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    for (let i = 0; i < trailParticles.length; i++) {
+      const particle = trailParticles[i];
+      particle.update();
+      particle.draw();
+      
+      if (particle.life <= 0 || particle.size <= 0.1) {
+        trailParticles.splice(i, 1);
+        i--;
+      }
+    }
+    
+    requestAnimationFrame(animateTrail);
+  }
+  
+  animateTrail();
   
   // Initialize Typed.js
   if (document.getElementById('typed')) {
@@ -379,20 +298,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Initialize VanillaTilt for project cards
-  if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(document.querySelectorAll('.project-card'), {
-      max: 15,
-      speed: 400,
-      glare: true,
-      'max-glare': 0.3,
-    });
-  }
-  
-  // GSAP Scroll Animations
+  // GSAP Animations (including 3D effects)
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
     
+    // Hero Content Animation
     gsap.from('.hero-content', {
       opacity: 0,
       y: 100,
@@ -400,14 +310,69 @@ document.addEventListener('DOMContentLoaded', function() {
       ease: 'power3.out',
     });
     
-    gsap.from('.hero-image', {
+    // Hero Image Holographic Animation
+    gsap.from('.hologram-img', {
       opacity: 0,
-      x: 100,
-      duration: 1,
-      ease: 'power3.out',
+      scale: 0.8,
+      duration: 1.5,
+      ease: 'elastic.out(1, 0.5)',
       delay: 0.3,
     });
     
+    // Animate shapes with 3D rotation
+    gsap.to('.shape-1', {
+      rotationX: 360,
+      rotationY: 360,
+      duration: 10,
+      repeat: -1,
+      ease: 'linear',
+    });
+    
+    gsap.to('.shape-2', {
+      rotationX: -360,
+      rotationY: 360,
+      duration: 8,
+      repeat: -1,
+      ease: 'linear',
+    });
+    
+    gsap.to('.shape-3', {
+      rotationX: 360,
+      rotationY: -360,
+      duration: 12,
+      repeat: -1,
+      ease: 'linear',
+    });
+    
+    // Holographic Title Animation
+    gsap.from('.hologram-title', {
+      opacity: 0,
+      rotationX: 90,
+      rotationY: 30,
+      duration: 1.5,
+      ease: 'power3.out',
+      onComplete: () => {
+        gsap.to('.hologram-title', {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.5,
+          ease: 'power3.inOut',
+          repeat: -1,
+          repeatDelay: 2,
+          yoyo: true,
+        });
+        gsap.to('.title-name', {
+          duration: 0.2,
+          repeat: -1,
+          repeatDelay: 3,
+          onRepeat: function() {
+            this.target.style.animation = 'glitch 0.5s';
+          }
+        });
+      }
+    });
+    
+    // Project Cards Animation
     gsap.utils.toArray('.project-card').forEach((card, i) => {
       gsap.from(card, {
         scrollTrigger: {
@@ -416,10 +381,32 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         opacity: 0,
         y: 50,
+        rotationX: 45,
         duration: 0.8,
         ease: 'power3.out',
         delay: i * 0.2,
       });
+      
+      // Hover 3D Effect (only on non-mobile devices)
+      if (window.innerWidth > 768) {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            rotationX: 10,
+            rotationY: 10,
+            duration: 0.5,
+            ease: 'power3.out',
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            rotationX: 0,
+            rotationY: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+          });
+        });
+      }
     });
     
     gsap.utils.toArray('.skill-category').forEach((skill, i) => {
@@ -494,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', animateSkillBars);
   animateSkillBars();
   
-  // Hero image parallax on mouse move
+  // Hero image parallax on mouse move (updated for 3D)
   const heroImage = document.querySelector('.hero-image');
   const shapes = document.querySelectorAll('.shape');
   
@@ -504,14 +491,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const x = (clientX - left) / width - 0.5;
     const y = (clientY - top) / height - 0.5;
     
+    gsap.to('.hologram-img', {
+      rotationX: y * 20,
+      rotationY: x * 20,
+      duration: 0.5,
+      ease: 'power3.out',
+    });
+    
     shapes.forEach((shape, index) => {
-      shape.style.transform = `translateZ(-${(index + 1) * 20}px) rotate(${x * 5}deg) translate(${x * 20}px, ${y * 20}px)`;
+      gsap.to(shape, {
+        x: x * 20,
+        y: y * 20,
+        rotationX: y * 30,
+        rotationY: x * 30,
+        duration: 0.5,
+        ease: 'power3.out',
+      });
     });
   });
   
   heroImage.addEventListener('mouseleave', () => {
+    gsap.to('.hologram-img', {
+      rotationX: 0,
+      rotationY: 0,
+      duration: 0.5,
+      ease: 'power3.out',
+    });
+    
     shapes.forEach((shape) => {
-      shape.style.transform = '';
+      gsap.to(shape, {
+        x: 0,
+        y: 0,
+        rotationX: 0,
+        rotationY: 0,
+        duration: 0.5,
+        ease: 'power3.out',
+      });
     });
   });
   
@@ -519,83 +534,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.querySelector('.contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-      // Don't prevent default - let form submit to Formspree
-      // e.preventDefault();
-      
-      // Store reference to form message element and form itself
       const formMessage = document.getElementById('form-message');
       const form = this;
       
-      // Show the message immediately (Formspree will handle the actual submission)
-      if (formMessage) {
-        setTimeout(function() {
-          formMessage.style.display = 'block';
-        }, 1000);
-      }
-      
-      // Optional: Reset form after successful submission (Formspree will redirect)
-      // This might not execute due to page redirect from Formspree
-      // form.reset();
-    });
-  }
-  
-  // Instagram Direct Message Form
-  const instagramForm = document.getElementById('instagram-message-form');
-  if (instagramForm) {
-    instagramForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Get form values
-      const name = document.getElementById('instagram-name').value.trim();
-      const message = document.getElementById('instagram-message').value.trim();
-      
-      if (name && message) {
-        // Create notification to inform user
-        const notification = document.createElement('div');
-        notification.classList.add('notification');
-        
-        notification.innerHTML = `
-          <img src="sk.jpg" alt="Shashank Mishra" class="notification-avatar">
-          <div class="notification-content">
-            <div class="notification-title">Message Sent to Instagram</div>
-            <div class="notification-text">Hi ${name}, your message has been forwarded to my Instagram inbox</div>
-          </div>
-        `;
-        
-        // Add to body
-        document.body.appendChild(notification);
-        
-        // Show notification
-        setTimeout(() => {
-          notification.classList.add('active');
-        }, 100);
-        
-        // Remove notification after 5 seconds
-        setTimeout(() => {
-          notification.classList.remove('active');
-          setTimeout(() => {
-            notification.remove();
-          }, 300);
-        }, 5000);
-        
-        // Prepare data for sending to Instagram
-        const instagramUsername = 'shashank_mishra.3';
-        console.log(`Instagram message from ${name}: "${message}" sent to @${instagramUsername}`);
-        
-        // In a real implementation, you would send this to your backend
-        // which would then use Instagram's API or a notification system
-        // to forward the message to your Instagram inbox
-        
-        // Optional: Offer to redirect to Instagram
-        setTimeout(() => {
-          if (confirm('Would you like to open Instagram Direct to continue the conversation?')) {
-            window.open(`https://www.instagram.com/direct/t/${instagramUsername}`, '_blank');
-          }
-        }, 1500);
-        
-        // Reset form
-        this.reset();
-      }
+      setTimeout(function() {
+        formMessage.style.display = 'block';
+      }, 1000);
     });
   }
 });
